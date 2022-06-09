@@ -1,0 +1,340 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{90DA5F8B-14CC-4E31-9B0B-B127027454CB}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>View</RootNamespace>
+    <AssemblyName>View</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <PublishUrl>\\192.168.1.222\setup_qlhs2021\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>true</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://192.168.1.222/QLHS2021/</InstallUrl>
+    <UpdateUrl>http://192.168.1.222/QLHS2021/</UpdateUrl>
+    <ProductName>QLHS2021</ProductName>
+    <PublisherName>Ngô Thanh Hải</PublisherName>
+    <SuiteName>haint</SuiteName>
+    <MinimumRequiredVersion>1.0.0.0</MinimumRequiredVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <BootstrapperComponentsUrl>D:\05. SOFTS\SQL SERVER</BootstrapperComponentsUrl>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>49F9FF40709785FD1D01DFA4E9424EBC185A6A52</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>View_1_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Logo_VBHP.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="fCapnhatThongso.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fCapnhatThongso.Designer.cs">
+      <DependentUpon>fCapnhatThongso.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fCayCV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fCayCV.Designer.cs">
+      <DependentUpon>fCayCV.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fChonCSDL.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fChonCSDL.Designer.cs">
+      <DependentUpon>fChonCSDL.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fDieuchinhMSDulieuPT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fDieuchinhMSDulieuPT.Designer.cs">
+      <DependentUpon>fDieuchinhMSDulieuPT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fSuaCayCV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fSuaCayCV.Designer.cs">
+      <DependentUpon>fSuaCayCV.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fDoiMatkhau.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fDoiMatkhau.Designer.cs">
+      <DependentUpon>fDoiMatkhau.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fLogin.designer.cs">
+      <DependentUpon>fLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fMain.designer.cs">
+      <DependentUpon>fMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fNhapCV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fNhapCV.Designer.cs">
+      <DependentUpon>fNhapCV.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fCaidatUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fCaidatUser.Designer.cs">
+      <DependentUpon>fCaidatUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fGiaoviec.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fGiaoviec.Designer.cs">
+      <DependentUpon>fGiaoviec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fCapnhatCV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fCapnhatCV.Designer.cs">
+      <DependentUpon>fCapnhatCV.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fSuaCVGoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fSuaCVGoc.Designer.cs">
+      <DependentUpon>fSuaCVGoc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fThongsoCaidat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fThongsoCaidat.Designer.cs">
+      <DependentUpon>fThongsoCaidat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fTimkiemCV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fTimkiemCV.designer.cs">
+      <DependentUpon>fTimkiemCV.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fXuatSoCVExcel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fXuatSoCVExcel.Designer.cs">
+      <DependentUpon>fXuatSoCVExcel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="fCapnhatThongso.resx">
+      <DependentUpon>fCapnhatThongso.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fCayCV.resx">
+      <DependentUpon>fCayCV.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fChonCSDL.resx">
+      <DependentUpon>fChonCSDL.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fDieuchinhMSDulieuPT.resx">
+      <DependentUpon>fDieuchinhMSDulieuPT.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fSuaCayCV.resx">
+      <DependentUpon>fSuaCayCV.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fDoiMatkhau.resx">
+      <DependentUpon>fDoiMatkhau.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fLogin.resx">
+      <DependentUpon>fLogin.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fMain.resx">
+      <DependentUpon>fMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fNhapCV.resx">
+      <DependentUpon>fNhapCV.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fCaidatUser.resx">
+      <DependentUpon>fCaidatUser.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fGiaoviec.resx">
+      <DependentUpon>fGiaoviec.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fCapnhatCV.resx">
+      <DependentUpon>fCapnhatCV.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fSuaCVGoc.resx">
+      <DependentUpon>fSuaCVGoc.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fThongsoCaidat.resx">
+      <DependentUpon>fThongsoCaidat.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fTimkiemCV.resx">
+      <DependentUpon>fTimkiemCV.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fXuatSoCVExcel.resx">
+      <DependentUpon>fXuatSoCVExcel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\DataSources\Model.CongVan.datasource" />
+    <None Include="Properties\DataSources\Model.CoQuan.datasource" />
+    <None Include="Properties\DataSources\Model.DangNhap.datasource" />
+    <None Include="Properties\DataSources\Model.DuoiCV.datasource" />
+    <None Include="Properties\DataSources\Model.GiaiDoan.datasource" />
+    <None Include="Properties\DataSources\Model.GiaoViec.datasource" />
+    <None Include="Properties\DataSources\Model.LoaiCV.datasource" />
+    <None Include="Properties\DataSources\Model.NhanVien.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="View_1_TemporaryKey.pfx" />
+    <None Include="View_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\App\App.csproj">
+      <Project>{94901de8-b634-451a-a171-88d606d75ea9}</Project>
+      <Name>App</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{2db9dc0e-be79-4b34-89d8-66ede143cd8b}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserControls\UserControls.csproj">
+      <Project>{f9636d58-c04c-49ca-9f7a-b55573d41447}</Project>
+      <Name>UserControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ViewModel\ViewModel.csproj">
+      <Project>{f7d33a8c-cb9b-4110-ac2f-6f26190e67c5}</Project>
+      <Name>ViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Logo_VBHP.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
