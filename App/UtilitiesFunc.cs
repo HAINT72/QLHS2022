@@ -188,11 +188,11 @@ namespace App
             if (string.IsNullOrEmpty(stFileName)) return;
 
             if (!stFileName.Contains(@"\"))
-            {
-                //Copy File trên Server vào thư mục temp trên máy local
-                CopyFileFromServer(stFileName, stDirectoryOfFileAttch);
-                // Tạo đường dẫn file local //string stPath = GetPathFile();
-                stFileName = Path.Combine(stDirectoryOfFileAttch, stFileName);
+            {                
+                if (CopyFileFromServer(stFileName, stDirectoryOfFileAttch)) //Copy File trên Server vào thư mục temp trên máy local                    
+                    stFileName = Path.Combine(stDirectoryOfFileAttch, stFileName); // Tạo đường dẫn file local 
+                else
+                    return;
             }
 
             if (!File.Exists(stFileName))
@@ -216,7 +216,15 @@ namespace App
                 Functions.MsgBox(stMsg, MessageType.Error);
                 return false;
             }
-            File.Copy(stFullFileNameSource, stFullFileNameDest, true);
+            try
+            {
+                File.Copy(stFullFileNameSource, stFullFileNameDest, true);
+            }
+            catch
+            {
+                Functions.MsgBox("Không thể thực hiện do File đang được mở hoặc đã có lỗi");
+                return false;
+            }
             return true;
         }
 
@@ -231,7 +239,15 @@ namespace App
                 Functions.MsgBox(stMsg, MessageType.Error);
                 return false;
             }
-            File.Copy(stFullFileNameSource, stFullFileNameDest, true);
+            try
+            {
+                File.Copy(stFullFileNameSource, stFullFileNameDest, true);
+            }
+            catch 
+            {
+                Functions.MsgBox("Không thể thực hiện do File đang được mở hoặc đã có lỗi");
+                return false;
+            }
             return true;
         }
 
