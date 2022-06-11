@@ -433,49 +433,6 @@ BEGIN
 END
 GO
 
-CREATE FUNCTION dbo.fTaoMSCV_Ver1(@stFirstMSCV NVARCHAR(1), @dNGAYCV DATE) RETURNS NVARCHAR(20) AS
--- Tạo MSCV với định dạng F.yyyymmdd.xxx hoặc T.yyyymmdd.xxx trong đó:
--- stFirstMSCV (F: Công văn đến, T: Công văn đi); dNGAYCV (yyyymmdd)
-BEGIN
-	DECLARE @stMSCV NVARCHAR(20)
-
-	DECLARE @tTemp TABLE(MSCV NVARCHAR(20))
-
-	--Đưa vào bản tạm các MSCV có cùng ngày và cùng loại
-	INSERT INTO @tTemp SELECT MSCV FROM dbo.tCongVan WHERE (NGAYCV=@dNGAYCV AND LEFT(MSCV,1)=@stFirstMSCV)
-
-	DECLARE @stNGAYCV NVARCHAR(8)
-	SET @stNGAYCV = CAST(YEAR(@dNGAYCV) AS NVARCHAR) +  CAST(MONTH(@dNGAYCV) AS NVARCHAR) + CAST(DAY(@dNGAYCV) AS NVARCHAR)
-	
-	IF @@ROWCOUNT=0 --Không có MSCV trong ngày dNGAYCV
-	BEGIN
-		--Tạo MSCV theo định dạng
-		SET @stMSCV =@stFirstMSCV + '.' + @stNGAYCV + '.' + CAST(1 AS NVARCHAR)
-		--Kiểm tra xem có MSCV trùng
-		IF NOT EXISTS(SELECT MSCV FROM dbo.tCongVan WHERE MSCV = @stMSCV)
-			RETURN @stMSCV
-		ELSE -- Ngày CV được sửa đổi sau khi tạo MSCV
-					
-    END
-	
-	DECLARE @i INT
-	SET @i=1
-	DECLARE @stMSCVTemp NVARCHAR(20)	
-	SET @stMSCVTemp =@stFirstMSCV + '.' + @stNGAYCV + '.'
-
-	WHILE @@ROWCOUNT>0		
-	BEGIN
-		SET @stMSCV =@stMSCVTemp + CAST(@i AS NVARCHAR)
-		IF NOT EXISTS(SELECT MSCV FROM @tTemp WHERE MSCV = @stMSCV) --((SELECT COUNT(MSCV) FROM @tTemp WHERE MSCV = @stMSCV)=0) 
-			RETURN @stMSCV
-		DELETE @tTemp WHERE MSCV=@stMSCV
-		SET @i = @i+1				
-    END
-	RETURN @stMSCVTemp + CAST(@i AS NVARCHAR)
-END
-GO
-
-
 CREATE FUNCTION dbo.fConvertToUnsign (@strInput NVARCHAR(4000)) RETURNS NVARCHAR(4000) AS 
 BEGIN 
 	
