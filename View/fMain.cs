@@ -401,6 +401,15 @@ namespace View
             this.flowLayoutPnlMain.Controls.Clear();
         }
 
-        
+        private void AD_CapNhatFilePDFMenuItem_Click(object sender, EventArgs e)
+        {
+            string[,] TenFiles = Utilities.Instance.ReadFileNameFromServerDirectory();
+            int iLength = TenFiles.GetLength(1);
+            for (int i = 0; i < iLength; i++)
+            {
+                CongVanVM.Instance.ThemCongvan(TenFiles[1, i], TenFiles[0, i]);
+            }
+            Functions.MsgBox("Đã hoàn thành thêm dữ liệu");
+        }
     }
 }

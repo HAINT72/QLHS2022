@@ -122,6 +122,7 @@ namespace UserControls
                 DataProvider.Instance.ExecuteNonQuery(stQuery);
             }
             ResetData();
+            SetBlankAllControl();
         }
 
         private void bindNavigatorAddNewItem_Click(object sender, System.EventArgs e)

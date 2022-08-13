@@ -88,6 +88,7 @@ namespace View
             this.cmsFormMainCayCVMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsFormMainThaydoiCSDLMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsFormMainDangxuatMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AD_CapNhatFilePDFMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripMain.SuspendLayout();
             this.cmsNotifyIconMain.SuspendLayout();
             this.cmsFormMain.SuspendLayout();
@@ -118,7 +119,8 @@ namespace View
             this.AD_NhatKyDangNhapMenuItem,
             this.toolStripSeparator7,
             this.AD_DieuChinhMSMenuItem,
-            this.AD_CapNhatCVGocMenuItem});
+            this.AD_CapNhatCVGocMenuItem,
+            this.AD_CapNhatFilePDFMenuItem});
             this.AdminMenuItem.Enabled = false;
             this.AdminMenuItem.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AdminMenuItem.Name = "AdminMenuItem";
@@ -130,7 +132,7 @@ namespace View
             this.AD_ThongSoKetNoiMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("AD_ThongSoKetNoiMenuItem.Image")));
             this.AD_ThongSoKetNoiMenuItem.Name = "AD_ThongSoKetNoiMenuItem";
             this.AD_ThongSoKetNoiMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F1)));
-            this.AD_ThongSoKetNoiMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.AD_ThongSoKetNoiMenuItem.Size = new System.Drawing.Size(259, 22);
             this.AD_ThongSoKetNoiMenuItem.Text = "Thông số kết nối";
             this.AD_ThongSoKetNoiMenuItem.Click += new System.EventHandler(this.AD_ThongSoKetNoiMenuItem_Click);
             // 
@@ -139,35 +141,35 @@ namespace View
             this.AD_ThongSoCaiDatMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("AD_ThongSoCaiDatMenuItem.Image")));
             this.AD_ThongSoCaiDatMenuItem.Name = "AD_ThongSoCaiDatMenuItem";
             this.AD_ThongSoCaiDatMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F2)));
-            this.AD_ThongSoCaiDatMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.AD_ThongSoCaiDatMenuItem.Size = new System.Drawing.Size(259, 22);
             this.AD_ThongSoCaiDatMenuItem.Text = "Thông số cài đặt";
             this.AD_ThongSoCaiDatMenuItem.Click += new System.EventHandler(this.AD_ThongSoCaiDatMenuItem_Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(243, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(256, 6);
             // 
             // AD_NhatKyDangNhapMenuItem
             // 
             this.AD_NhatKyDangNhapMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("AD_NhatKyDangNhapMenuItem.Image")));
             this.AD_NhatKyDangNhapMenuItem.Name = "AD_NhatKyDangNhapMenuItem";
             this.AD_NhatKyDangNhapMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F3)));
-            this.AD_NhatKyDangNhapMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.AD_NhatKyDangNhapMenuItem.Size = new System.Drawing.Size(259, 22);
             this.AD_NhatKyDangNhapMenuItem.Text = "Nhật ký đăng nhập";
             this.AD_NhatKyDangNhapMenuItem.Click += new System.EventHandler(this.AD_NhatKyDangNhapMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(243, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(256, 6);
             // 
             // AD_DieuChinhMSMenuItem
             // 
             this.AD_DieuChinhMSMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("AD_DieuChinhMSMenuItem.Image")));
             this.AD_DieuChinhMSMenuItem.Name = "AD_DieuChinhMSMenuItem";
             this.AD_DieuChinhMSMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.AD_DieuChinhMSMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.AD_DieuChinhMSMenuItem.Size = new System.Drawing.Size(259, 22);
             this.AD_DieuChinhMSMenuItem.Text = "Điều chỉnh mã số";
             this.AD_DieuChinhMSMenuItem.Click += new System.EventHandler(this.AD_DieuChinhMSMenuItem_Click);
             // 
@@ -176,7 +178,7 @@ namespace View
             this.AD_CapNhatCVGocMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("AD_CapNhatCVGocMenuItem.Image")));
             this.AD_CapNhatCVGocMenuItem.Name = "AD_CapNhatCVGocMenuItem";
             this.AD_CapNhatCVGocMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F5)));
-            this.AD_CapNhatCVGocMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.AD_CapNhatCVGocMenuItem.Size = new System.Drawing.Size(259, 22);
             this.AD_CapNhatCVGocMenuItem.Text = "Sửa công văn gốc";
             this.AD_CapNhatCVGocMenuItem.Click += new System.EventHandler(this.AD_CapNhatCVGocMenuItem_Click);
             // 
@@ -599,6 +601,15 @@ namespace View
             this.cmsFormMainDangxuatMenuItem.Text = "Đăng xuất";
             this.cmsFormMainDangxuatMenuItem.Click += new System.EventHandler(this.cmsFormMainDangxuatMenuItem_Click);
             // 
+            // AD_CapNhatFilePDFMenuItem
+            // 
+            this.AD_CapNhatFilePDFMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("AD_CapNhatFilePDFMenuItem.Image")));
+            this.AD_CapNhatFilePDFMenuItem.Name = "AD_CapNhatFilePDFMenuItem";
+            this.AD_CapNhatFilePDFMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F6)));
+            this.AD_CapNhatFilePDFMenuItem.Size = new System.Drawing.Size(259, 22);
+            this.AD_CapNhatFilePDFMenuItem.Text = "Cập nhật từ file PDF";
+            this.AD_CapNhatFilePDFMenuItem.Click += new System.EventHandler(this.AD_CapNhatFilePDFMenuItem_Click);
+            // 
             // fMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -683,6 +694,7 @@ namespace View
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem AD_CapNhatCVGocMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AD_CapNhatFilePDFMenuItem;
     }
 }
 

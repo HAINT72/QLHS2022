@@ -183,6 +183,20 @@ namespace App
             return data.ToString();
         }
 
+        public string [,] ReadFileNameFromServerDirectory() //Đọc toàn bộ tên file trong thư mục PDF trên Server
+        {
+            string stPath = GetPathFile();
+            string[] tmp = Directory.GetFiles(stPath);
+            int iLength = tmp.Length;
+            string[,] kq = new string[2,iLength];
+            for (int i = 0; i < iLength; i++)
+            {
+                kq[0,i] = Path.GetFileName(tmp[i]);
+                kq[1, i] = Path.GetFileNameWithoutExtension(tmp[i]);
+            }
+            return kq;
+        }
+
         public void OpenFileAtch(string stFileName)
         {
             if (string.IsNullOrEmpty(stFileName)) return;
@@ -339,6 +353,7 @@ namespace App
                 pck.Save();
             }
         }
+
         #region CodeSave
         //public bool CopyFileToServer(string[] stArrFullFileNameSource, string[] stArrFileNameDest) //Trả về true nếu Copy tất cả file đều thành công và ngược lại.
         //{
