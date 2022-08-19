@@ -51,17 +51,8 @@ namespace View
             string passWord = txbPassWord.Text;
             if (NhanVienVM.Instance.Login(userName, passWord))
             {
-                try
-                {
-                    fChonCSDL f = new fChonCSDL();
-                    f.ShowDialog();
-                }
-                catch
-                {
-                    Functions.MsgBox("Đã có lỗi kết nối dữ liệu. Kiểm tra mạng/chuỗi kết nối", MessageType.Error);
-                    fThongsoCaidat f = new fThongsoCaidat();
-                    f.ShowDialog();
-                }
+                fChonCSDL f = new fChonCSDL();
+                f.ShowDialog();
             }
             else
                 Functions.MsgBox("Sai tên tài khoản hoặc mật khẩu!", MessageType.Error);
