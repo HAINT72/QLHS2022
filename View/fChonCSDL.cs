@@ -14,9 +14,22 @@ namespace View
 
         private void fChonCSDL_Load(object sender, EventArgs e)
         {
-            this.dtgvTS.SetDataSource("SELECT * FROM tThongSo WHERE HIEULUC = 1");
-            this.dtgvTS.SetHeaderText(new string[] { "Tên CSDL", "Nội dung" });
-            this.dtgvTS.AutoSizeDtgvCellsOn();
+            try
+            {
+                this.dtgvTS.SetDataSource("SELECT * FROM tThongSo WHERE HIEULUC = 1");
+                this.dtgvTS.SetHeaderText(new string[] { "Tên CSDL", "Nội dung" });
+                this.dtgvTS.AutoSizeDtgvCellsOn();
+            }
+            catch (System.Data.SqlClient.SqlException)
+            {
+                Functions.MsgBox("Đã có lỗi kết nối dữ liệu. Kiểm tra mạng/chuỗi kết nối", MessageType.Error);
+                fThongsoCaidat f = new fThongsoCaidat();
+                f.ShowDialog();
+                string stMess = $"Đã sửa chuỗi kết nối.\n Thoát chương trình để dùng dữ liệu mới.";
+                Functions.MsgBox(stMess, MessageType.Information);
+                Application.Exit();
+            }
+
         }
 
         private void btnChon_Click(object sender, EventArgs e)
