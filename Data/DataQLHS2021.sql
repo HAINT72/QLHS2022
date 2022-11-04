@@ -1,7 +1,11 @@
 ﻿--Tạo DATABASE và USE Database
-CREATE DATABASE QLHS_HP
+--Trước khi chạy script này, phải thực hiện :
+-- (1) Đổi tên Database
+-- (2) Kiểm tra các dữ liệu đưa vào trước
+
+CREATE DATABASE QLHS_HP_BDH
 GO
-USE QLHS_HP
+USE QLHS_HP_BDH
 GO
 -- Tạo Table
 CREATE TABLE dbo.tNhanVien
@@ -44,7 +48,7 @@ GO
 CREATE TABLE dbo.tCongVan
 (
 	MSCV NVARCHAR(20) PRIMARY KEY,
-	SOCV NVARCHAR(50) NOT NULL,
+	SOCV NVARCHAR(255) NOT NULL,
 	NGAYCV DATE NOT NULL DEFAULT GETDATE(),
 	NOIDUNG NVARCHAR(MAX) NULL,
 	NOIDUNG_Unsign NVARCHAR(MAX) NULL,
@@ -166,28 +170,6 @@ BEGIN
 		@stMSCV, @stSOCV, @stNOIDUNG, dbo.fConvertToUnsign(@stNOIDUNG), @dNGAYCV, @stMSNV, @iMSLOAICV, @iMSCQ, @iMSGIAIDOAN, @stMSCVCHA, @stFILEPDF, @stFILEOFFICE, @stFILERAR
 	)
 
-	SELECT @stMSCV
-END
-GO
-ALTER PROC USP_ThemCongvanMSCV 
-	@stMSCV NVARCHAR(20),
-	@stFILEPDF NVARCHAR(MAX)	
-AS
-BEGIN
-	IF ((LEFT(@stMSCV,2)='F.') OR (LEFT(@stMSCV,2)='T.'))
-	BEGIN
-		IF NOT EXISTS(SELECT MSCV FROM dbo.tCongVan WHERE trim(MSCV) = trim(@stMSCV))
-		BEGIN
-			INSERT INTO  dbo.tCongVan
-			(	
-				MSCV, SOCV, NGAYCV, MSNV, MSLOAICV, MSCQ, MSGIAIDOAN, MSCVCHA, FILEPDF, PHEDUYET
-			)
-			VALUES
-			( 
-				@stMSCV, 'SOCV', GETDATE(),'thoilt', 2, 28, 8, 'F1231', @stFILEPDF, 1
-			)
-		END
-	END
 	SELECT @stMSCV
 END
 GO
@@ -400,8 +382,6 @@ BEGIN
 END
 GO
 
-USE QLHS_HP
-GO
 CREATE PROC USP_CapNhatCayCV
 @stMSCV_SOURCE NVARCHAR(20) = NULL,
 @stMSCV_DEST NVARCHAR(20) = NULL
@@ -419,6 +399,7 @@ BEGIN
 			UPDATE tCongVan SET MSCVCHA = '' WHERE MSCV = @stMSCV_DEST			
 		END
 END
+GO
 
 -- Tạo View
 CREATE VIEW UVW_GiaoViec
@@ -444,7 +425,8 @@ BEGIN
 	DECLARE @i INT
 	
 	SET @i=1	
-	SET @stNGAYCV = CAST(YEAR(@dNGAYCV) AS NVARCHAR) +  CAST(MONTH(@dNGAYCV) AS NVARCHAR) + CAST(DAY(@dNGAYCV) AS NVARCHAR)
+	SET @stNGAYCV = REPLACE(CAST(@dNGAYCV AS NVARCHAR),'-','')
+	--SET @stNGAYCV = CAST(YEAR(@dNGAYCV) AS NVARCHAR) +  CAST(MONTH(@dNGAYCV) AS NVARCHAR) + CAST(DAY(@dNGAYCV) AS NVARCHAR)
 	SET @stMSCV = @stFirstMSCV + '.' + @stNGAYCV + '.' + CAST(@i AS NVARCHAR)
 	
 	WHILE (EXISTS(SELECT MSCV FROM dbo.tCongVan WHERE MSCV = @stMSCV))
@@ -531,8 +513,13 @@ GO
 --Insert tThongSo
 INSERT INTO dbo.tThongSo (MSTS, STR_DATA, STR_PATH, HIEULUC, NOIDUNG)
 VALUES (N'QLHS_HP', N'Data Source=192.168.1.222,1433;Initial Catalog=QLHS_HP;Persist Security Info=True;User ID=BOT.HP;Password=hp12345', N'\\192.168.1.222\QLHS\PDF FILE\BOT.HP', 1, N'Dự án PPP ven biển Hải Phòng - Thời gian từ 2018-2022')
+
+INSERT INTO dbo.tThongSo (MSTS, STR_DATA, STR_PATH, HIEULUC, NOIDUNG)
+VALUES (N'QLHS_HP_BDH', N'Data Source=192.168.1.222,1433;Initial Catalog=QLHS_HP_BDH;Persist Security Info=True;User ID=BOT.HP.BDH;Password=hpbdh12345', N'\\192.168.1.222\QLHS\PDF FILE\BOT.HP-BDH', 1, N'Dự án PPP ven biển Hải Phòng (Nhà thầu) - Thời gian từ 2018-2022')
+
 INSERT INTO dbo.tThongSo (MSTS, STR_DATA, STR_PATH, HIEULUC, NOIDUNG)
 VALUES (N'QLHS_DN', N'Data Source=192.168.1.222,1433;Initial Catalog=QLHS_DN;Persist Security Info=True;User ID=BOT.DN;Password=dn12345', N'\\192.168.1.222\QLHS\PDF FILE\BOT.DN', 1, N'Dự án BOT cầu Đồng Nai mới và tuyến hai đầu cầu - Thời gian từ 2008-2018')
+
 INSERT INTO dbo.tThongSo (MSTS, STR_DATA, STR_PATH, HIEULUC, NOIDUNG)
 VALUES (N'QLHS_AH', N'Data Source=192.168.1.222,1433;Initial Catalog=QLHS_AH;Persist Security Info=True;User ID=BOT.AH;Password=ah12345', N'\\192.168.1.222\QLHS\PDF FILE\ANHAO', 1, N'Dự án BOT  cầu Đồng Nai mới và tuyến hai đầu cầu (cầu An Hảo) - Thời gian từ 2016-2018')
 

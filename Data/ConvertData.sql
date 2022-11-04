@@ -1,8 +1,9 @@
 ﻿--Trước khi chạy script này, phải thực hiện :
 -- (1) Chạy script DataQlHS2021.sql
--- (2) import các bảng tblLoaiCV, tblCoQuanbanhanh, tblDuoiSoCV, tblCongVanDen, tblCongVanDi
+-- (2) import các bảng tblLoaiCongVan, tblCoQuanbanhanh, tblDuoiSoCV, tblCongVanDen, tblCongVanDi
+-- (3) USE <Tên Data>
 
-USE QLHS_HP
+USE QLHS_HP_BDH
 GO
 --Thêm cột MSLOAICVSAVE vào tLoaiCV
 INSERT INTO dbo.tLoaiCV (LOAICV, MSLOAICVSAVE) SELECT LOAICONGVAN, MSLOAICV FROM dbo.tblLoaiCongVan 
