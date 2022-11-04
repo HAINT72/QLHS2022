@@ -275,7 +275,7 @@ namespace UserControls
         }
 
         private void OpenFile_Click(object sender, EventArgs e)
-        {
+        {            
             Utilities.Instance.OpenFileAtch(stFileName);
         }
 

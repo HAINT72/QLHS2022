@@ -215,7 +215,6 @@ namespace App
                 Functions.MsgBox(stMsg, MessageType.Error);
                 return;
             }
-           
             Process.Start(stFileName);
         }
 
