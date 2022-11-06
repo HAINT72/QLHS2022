@@ -298,7 +298,7 @@ namespace View
                 DataTable data = DataProvider.Instance.ExecuteQuery(stQuery);
                 if (data.Rows.Count == 0)
                 {
-                    Functions.MsgBox("Không có dữ liệu.", MessageType.Information);
+                    //Functions.MsgBox("Không có dữ liệu.", MessageType.Information);
                     return;
                 }
             }
