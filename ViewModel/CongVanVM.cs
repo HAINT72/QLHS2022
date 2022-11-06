@@ -66,14 +66,14 @@ namespace ViewModel
             }
         }
 
-        public string ThemCongvan(CongVan cv)
+        public string ThemCongvan(CongVan cv) //Thêm công văn đầy đủ
         {
             string stQuery = "exec USP_ThemCongvan @stFirstMSCV , @stSOCV , @stNOIDUNG , @dNGAYCV , @stMSNV , @iMSLOAICV , @iMSCQ , @iMSGIAIDOAN , @stMSCVCHA , @stExtFILEPDF , @stExtFILEOFFICE , @stExtFILERAR ";
             var result = DataProvider.Instance.ExecuteScalar(stQuery, new object[] { cv.MSCV, cv.SOCV, cv.NOIDUNG, cv.NGAYCV, cv.MSNV, cv.MSLOAICV, cv.MSCQ, cv.MSGIAIDOAN, cv.MSCVCHA, cv.FILEPDF, cv.FILEOFFICE, cv.FILERAR });
             return result.ToString();
         }
 
-        public string ThemCongvan(string stMSCV, string stFilePDF)
+        public string ThemCongvan(string stMSCV, string stFilePDF) //Thêm công văn chỉ MSCV và file PDF - Dùng khi cập nhật công van đã có file PDF trên Server
         {
             string stQuery = "exec USP_ThemCongvanMSCV @ststMSCV , @stFILEPDF";
             var result = DataProvider.Instance.ExecuteScalar(stQuery, new object[] { stMSCV, stFilePDF});

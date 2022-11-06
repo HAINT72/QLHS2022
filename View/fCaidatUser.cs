@@ -81,7 +81,7 @@ namespace View
         private void btnResetMK_Click(object sender, EventArgs e)
         {
             if (NhanVienVM.Instance.ResetPassword(this.txbUsername.Text))
-                Functions.MsgBox("Đã reset mật khẩu thành công. Mật khẩu mới của bạn là '1'.", MessageType.Success);
+                Functions.MsgBox("Đã reset mật khẩu thành công. Mật khẩu mới của bạn là '2'.", MessageType.Success);
             else
                 Functions.MsgBox("Reset mật khẩu thất bại.", MessageType.Error);
         }

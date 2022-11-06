@@ -114,15 +114,19 @@ namespace UserControls
         private void tsbtnSave_Click(object sender, System.EventArgs e)
         {
             if (string.IsNullOrEmpty(txbMSCV.Text))
+            {   //Thêm công văn mới
                 ThemCongvan();
+                SetBlankAllControl();
+            }
             else
-            {   //Sửa và phát hành Công văn
-                SuaCongvan();
-                string stQuery = $"UPDATE tCongVan SET PHEDUYET=1 WHERE MSCV ='{txbMSCV.Text}'";
-                DataProvider.Instance.ExecuteNonQuery(stQuery);
+            {   //Sửa và phát hành công văn (nếu sửa thành công)
+                if (SuaCongvan())
+                {
+                    string stQuery = $"UPDATE tCongVan SET PHEDUYET=1 WHERE MSCV ='{txbMSCV.Text}'";
+                    DataProvider.Instance.ExecuteNonQuery(stQuery);
+                }
             }
             ResetData();
-            SetBlankAllControl();
         }
 
         private void bindNavigatorAddNewItem_Click(object sender, System.EventArgs e)

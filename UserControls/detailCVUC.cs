@@ -393,45 +393,65 @@ namespace UserControls
             cbMSCVCHA.ValueMember = "MSCV";
         }
 
-        public void ThemCongvan()
+        public bool ThemCongvan()
         {
             CongVan cv = GetCongVan();
             cv.MSCV = CongVanVM.Instance.ThemCongvan(cv);
             if (cv.MSCV != null && CongVanVM.Instance.CopyFileAtchsToServer(cv))
+            {
                 Functions.MsgBox("Thêm công văn thành công", MessageType.Success);
+                LoadcbMSCVCHA();
+                return true;
+            }
             else
+            {
                 Functions.MsgBox("Thêm công văn thất bại", MessageType.Error);
-            LoadcbMSCVCHA();
-        }
-
-        public void SuaCongvan()
-        {
-            bool bKetqua = false;
-            CongVan cv = GetCongVan();
-            if (UserLoginCanDeleteEdit(cv.MSCV))
-                bKetqua = CongVanVM.Instance.SuaCongvan(cv);
-            else
-                Functions.MsgBox("Công văn đã phê duyệt/ User không có quyền sửa.", MessageType.Information);
+                return false;
+            }
            
-            if (bKetqua && CongVanVM.Instance.CopyFileAtchsToServer(cv))
-                Functions.MsgBox("Sửa công văn thành công", MessageType.Success);
-            else
-                Functions.MsgBox("Sửa công văn thất bại", MessageType.Error);
         }
 
-        public void XoaCongvan()
+        public bool SuaCongvan()
         {
-            bool bKetqua = false;
             CongVan cv = GetCongVan();
-            if (UserLoginCanDeleteEdit(cv.MSCV))
-                bKetqua = CongVanVM.Instance.XoaCongvan(cv.MSCV);
+            if (UserLoginCanDeleteEdit(cv.MSCV) == false)
+            {
+                Functions.MsgBox("Công văn đã phê duyệt/ User không có quyền sửa.", MessageType.Information);
+                return false;
+            }
+            
+            //Kiểm tra NGAYCV có bị thay đổi không?
+            if (CongVanVM.Instance.SuaCongvan(cv) && CongVanVM.Instance.CopyFileAtchsToServer(cv))
+            {
+                Functions.MsgBox("Sửa công văn thành công", MessageType.Success);
+                return true;
+            }
             else
-                Functions.MsgBox("Công văn đã phê duyệt/ User không có quyền xóa công văn", MessageType.Information);
+            {
+                Functions.MsgBox("Sửa công văn thất bại", MessageType.Error);
+                return false;
+            }
+        }
 
-            if (bKetqua && CongVanVM.Instance.DeleteFilesOnServer(cv))
+        public bool XoaCongvan()
+        {
+            CongVan cv = GetCongVan();
+            if (UserLoginCanDeleteEdit(cv.MSCV)==false)
+            {
+                Functions.MsgBox("Công văn đã phê duyệt/ User không có quyền xóa công văn", MessageType.Information);
+                return false;
+            }
+
+            if (CongVanVM.Instance.XoaCongvan(cv.MSCV) && CongVanVM.Instance.DeleteFilesOnServer(cv))
+            {
                 Functions.MsgBox("Xoá công văn thành công", MessageType.Success);
+                return true;
+            }
             else
+            {
                 Functions.MsgBox("Xoá công văn thất bại", MessageType.Error);
+                return false;
+            }
         }
 
         public void MovecbMSCVCHA(string stMSCV)

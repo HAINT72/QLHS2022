@@ -106,7 +106,8 @@ namespace View
             this.flowLayoutPnlMain.Controls.Clear();
             string stLabel = "Phát hành công văn đi";
             string stQuery = "SELECT * FROM tCongVan WHERE PHEDUYET = 0 AND LEFT(MSCV,1)='T'";
-            ShowDetailCrudUC(stLabel, stQuery); 
+            ShowDetailCrudUC(stLabel, stQuery);
+
         }
 
         private void VT_CapnhatCVMenuItem_Click(object sender, EventArgs e)
@@ -298,7 +299,7 @@ namespace View
                 DataTable data = DataProvider.Instance.ExecuteQuery(stQuery);
                 if (data.Rows.Count == 0)
                 {
-                    Functions.MsgBox("Không có dữ liệu.", MessageType.Information);
+                    //Functions.MsgBox("Không có dữ liệu.", MessageType.Information);
                     return;
                 }
             }
