@@ -197,7 +197,7 @@ BEGIN
 END
 GO
 
-CREATE PROC USP_SuaCongvan 
+alter PROC USP_SuaCongvan 
 	@stMSCV NVARCHAR(20) ='',
 	@stSOCV NVARCHAR(50) = '',
 	@stNOIDUNG NVARCHAR(MAX) = '',
@@ -211,23 +211,34 @@ CREATE PROC USP_SuaCongvan
 	@stFILERAR NVARCHAR(MAX) = ''	
 AS
 BEGIN				
-	IF (CHARINDEX('\', @stFILEPDF)>0) 
-		SET @stFILEPDF = @stMSCV + dbo.fGetExtFileName(@stFILEPDF)
-	
-	IF (CHARINDEX('\', @stFILEOFFICE)>0) 
-		SET @stFILEOFFICE = @stMSCV + dbo.fGetExtFileName(@stFILEOFFICE)
-	
-	IF (CHARINDEX('\', @stFILERAR)>0)  
-		SET @stFILERAR = @stMSCV + dbo.fGetExtFileName(@stFILERAR)
-	
 	UPDATE dbo.tCongVan	SET	SOCV = @stSOCV,
 							NOIDUNG = @stNOIDUNG,
-							NOIDUNG_Unsign = dbo.fConvertToUnsign(@stNOIDUNG),
-							NGAYCV = @dNGAYCV, 
+							NOIDUNG_Unsign = dbo.fConvertToUnsign(@stNOIDUNG),							
 							MSLOAICV = @iMSLOAICV, 
 							MSCQ = @iMSCQ, 
 							MSGIAIDOAN = @iMSGIAIDOAN, 
-							MSCVCHA = @stMSCVCHA, 
+							MSCVCHA = @stMSCVCHA							
+					  WHERE	MSCV = @stMSCV
+	
+	--Khai báo biến lưu lại MSCV
+	DECLARE @stMSCV_Update NVARCHAR(20)
+	
+	--Kiểm tra user có sửa NGAYCV
+	IF NOT EXISTS(SELECT MSCV FROM dbo.tCongVan WHERE MSCV=@stMSCV AND NGAYCV=@dNGAYCV) 
+		SET @stMSCV_Update = dbo.fTaoMSCV(LEFT(@stMSCV,1),@dNGAYCV)
+	ELSE
+		SET @stMSCV_Update =@stMSCV
+	
+	--Tạo tên file đính kèm
+	IF (@stFILEPDF !='') 
+		SET @stFILEPDF = @stMSCV_Update + dbo.fGetExtFileName(@stFILEPDF)
+	IF (@stFILEOFFICE !='') 
+		SET @stFILEOFFICE = @stMSCV_Update + dbo.fGetExtFileName(@stFILEOFFICE)	
+	IF (@stFILERAR!='')  
+		SET @stFILERAR = @stMSCV_Update + dbo.fGetExtFileName(@stFILERAR)
+
+	UPDATE dbo.tCongVan	SET	MSCV = @stMSCV_Update,
+							NGAYCV = @dNGAYCV, 
 							FILEPDF = @stFILEPDF, 
 							FILEOFFICE = @stFILEOFFICE, 
 							FILERAR = @stFILERAR

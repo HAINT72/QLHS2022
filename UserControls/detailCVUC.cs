@@ -224,7 +224,7 @@ namespace UserControls
 
             Controls.AddRange(new Control[] { fpnlDetail });
         }
-
+        
         #region Events
         private void txbFilePDF_Enter(object sender, EventArgs e)
         {
@@ -408,7 +408,6 @@ namespace UserControls
                 Functions.MsgBox("Thêm công văn thất bại", MessageType.Error);
                 return false;
             }
-           
         }
 
         public bool SuaCongvan()
