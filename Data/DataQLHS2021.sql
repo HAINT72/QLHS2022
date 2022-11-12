@@ -119,6 +119,73 @@ BEGIN
 		UPDATE dbo.tNhanVien SET PASSWORD=@stPassWord WHERE MSNV=@stMSNV
 END
 GO
+
+CREATE PROC USP_CopyFileBySQL @stFileSource NVARCHAR(MAX), @stFileDest NVARCHAR(MAX)
+AS
+BEGIN
+	-- Bật chế độ sử dụng lệnh xp_cmdshell
+	EXEC master.dbo.sp_configure 'show advanced options', 1
+	RECONFIGURE WITH OVERRIDE
+	EXEC master.dbo.sp_configure 'xp_cmdshell', 1
+	RECONFIGURE WITH OVERRIDE
+
+	--Copy file
+	DECLARE @cmd NVARCHAR(4000)
+	SET @cmd = N'copy ' + @stFileSource + N' ' +  @stFileDest	
+	EXEC xp_cmdshell @cmd, no_output
+
+	-- Tắt chế độ sử dụng lệnh xp_cmdshell
+	EXEC master.dbo.sp_configure 'xp_cmdshell', 0
+	RECONFIGURE WITH OVERRIDE
+	EXEC master.dbo.sp_configure 'show advanced options', 0
+	RECONFIGURE WITH OVERRIDE
+END
+GO
+
+CREATE PROC USP_RenameFileBySQL @stPathFileFull NVARCHAR(MAX), @stFileName NVARCHAR(MAX)
+AS
+BEGIN
+	-- Bật chế độ sử dụng lệnh xp_cmdshell
+	EXEC master.dbo.sp_configure 'show advanced options', 1
+	RECONFIGURE WITH OVERRIDE
+	EXEC master.dbo.sp_configure 'xp_cmdshell', 1
+	RECONFIGURE WITH OVERRIDE
+
+	--Rename file
+	DECLARE @cmd NVARCHAR(4000)
+	SET @cmd = N'rename ' + @stPathFileFull + N' ' +  @stFileName	
+	EXEC xp_cmdshell @cmd, no_output
+
+	-- Tắt chế độ sử dụng lệnh xp_cmdshell
+	EXEC master.dbo.sp_configure 'xp_cmdshell', 0
+	RECONFIGURE WITH OVERRIDE
+	EXEC master.dbo.sp_configure 'show advanced options', 0
+	RECONFIGURE WITH OVERRIDE
+END
+GO
+
+CREATE PROC USP_DeleteFileBySQL @stPathFileFull NVARCHAR(MAX)
+AS
+BEGIN
+	-- Bật chế độ sử dụng lệnh xp_cmdshell
+	EXEC master.dbo.sp_configure 'show advanced options', 1
+	RECONFIGURE WITH OVERRIDE
+	EXEC master.dbo.sp_configure 'xp_cmdshell', 1
+	RECONFIGURE WITH OVERRIDE
+
+	--Delete file
+	DECLARE @cmd NVARCHAR(4000)
+	SET @cmd = N'del /F ' + @stPathFileFull
+	EXEC xp_cmdshell @cmd, no_output
+
+	-- Tắt chế độ sử dụng lệnh xp_cmdshell
+	EXEC master.dbo.sp_configure 'xp_cmdshell', 0
+	RECONFIGURE WITH OVERRIDE
+	EXEC master.dbo.sp_configure 'show advanced options', 0
+	RECONFIGURE WITH OVERRIDE
+END
+GO
+
 CREATE PROC USP_ThemCongvan 
 	@stFirstMSCV NVARCHAR(1) ='F',
 	@stSOCV NVARCHAR(50) = '',
