@@ -176,7 +176,7 @@ namespace App
             return stMD5;
         }
 
-        private string GetPathFile()
+        public string GetPathFile()
         {
             string stQuery = $"SELECT STR_PATH FROM tThongSo WHERE MSTS ='{DataProvider.Instance.stMSTS}'";
             object data = DataProvider.Instance.ExecuteScalar(stQuery);

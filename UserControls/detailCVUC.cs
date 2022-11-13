@@ -397,7 +397,7 @@ namespace UserControls
         {
             CongVan cv = GetCongVan();
             cv.MSCV = CongVanVM.Instance.ThemCongvan(cv);
-            if (cv.MSCV != null && CongVanVM.Instance.CopyFileAtchsToServer(cv))
+            if (cv.MSCV != null) //&& CongVanVM.Instance.CopyFileAtchsToServer(cv))
             {
                 Functions.MsgBox("Thêm công văn thành công", MessageType.Success);
                 LoadcbMSCVCHA();

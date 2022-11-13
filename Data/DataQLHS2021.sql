@@ -128,12 +128,10 @@ BEGIN
 	RECONFIGURE WITH OVERRIDE
 	EXEC master.dbo.sp_configure 'xp_cmdshell', 1
 	RECONFIGURE WITH OVERRIDE
-
 	--Copy file
 	DECLARE @cmd NVARCHAR(4000)
-	SET @cmd = N'copy ' + @stFileSource + N' ' +  @stFileDest	
+	SET @cmd = N'copy ' + N'"'+ @stFileSource + N'" "' +  @stFileDest + N'"'
 	EXEC xp_cmdshell @cmd, no_output
-
 	-- Tắt chế độ sử dụng lệnh xp_cmdshell
 	EXEC master.dbo.sp_configure 'xp_cmdshell', 0
 	RECONFIGURE WITH OVERRIDE
@@ -150,12 +148,10 @@ BEGIN
 	RECONFIGURE WITH OVERRIDE
 	EXEC master.dbo.sp_configure 'xp_cmdshell', 1
 	RECONFIGURE WITH OVERRIDE
-
 	--Rename file
 	DECLARE @cmd NVARCHAR(4000)
-	SET @cmd = N'rename ' + @stPathFileFull + N' ' +  @stFileName	
+	SET @cmd = N'rename ' + N'"'+ @stPathFileFull + N'" "' +  @stFileName + N'"'
 	EXEC xp_cmdshell @cmd, no_output
-
 	-- Tắt chế độ sử dụng lệnh xp_cmdshell
 	EXEC master.dbo.sp_configure 'xp_cmdshell', 0
 	RECONFIGURE WITH OVERRIDE
@@ -172,12 +168,10 @@ BEGIN
 	RECONFIGURE WITH OVERRIDE
 	EXEC master.dbo.sp_configure 'xp_cmdshell', 1
 	RECONFIGURE WITH OVERRIDE
-
 	--Delete file
 	DECLARE @cmd NVARCHAR(4000)
-	SET @cmd = N'del /F ' + @stPathFileFull
+	SET @cmd = N'del /F ' + N'"'+ @stPathFileFull + N'"'
 	EXEC xp_cmdshell @cmd, no_output
-
 	-- Tắt chế độ sử dụng lệnh xp_cmdshell
 	EXEC master.dbo.sp_configure 'xp_cmdshell', 0
 	RECONFIGURE WITH OVERRIDE
@@ -186,7 +180,7 @@ BEGIN
 END
 GO
 
-CREATE PROC USP_ThemCongvan 
+ALTER PROC USP_ThemCongvan 
 	@stFirstMSCV NVARCHAR(1) ='F',
 	@stSOCV NVARCHAR(50) = '',
 	@stNOIDUNG NVARCHAR(MAX) = '',
@@ -196,6 +190,7 @@ CREATE PROC USP_ThemCongvan
 	@iMSCQ INT =1,
 	@iMSGIAIDOAN INT = 1,
 	@stMSCVCHA NVARCHAR(20) = '',
+	@stPATHSERVER NVARCHAR(MAX) = '',
 	@stFILEPDF NVARCHAR(MAX) = '',
 	@stFileOFFICE NVARCHAR(MAX) = '',
 	@stFileRAR NVARCHAR(MAX) = ''	
@@ -203,13 +198,18 @@ AS
 BEGIN	
 	DECLARE @stMSCV NVARCHAR(20)	
 	SET @stMSCV = dbo.fTaoMSCV(@stFirstMSCV, @dNGAYCV)
-		
-	IF (@stFILEPDF <> '')
-	BEGIN
-		DECLARE @stExtFILEPDF NVARCHAR(20)
-		SET @stExtFILEPDF = dbo.fGetExtFileName(@stFILEPDF)
-		SET @stFILEPDF = @stMSCV + @stExtFILEPDF
-	END
+	DECLARE @stFILE_DEST NVARCHAR(MAX)
+
+	--IF (@stFILEPDF <> '')
+	--BEGIN
+		DECLARE @stFILEPDF_ON_DATA NVARCHAR(20)		
+		SET @stFILEPDF_ON_DATA = LTRIM(@stMSCV) + dbo.fGetExtFileName(@stFILEPDF)
+
+		SET @stFILE_DEST = @stPATHSERVER + N'\' + @stFILEPDF_ON_DATA
+
+		EXEC USP_CopyFileBySQL @stFILEPDF, @stFILE_DEST
+		--SET @stFILEPDF = @stMSCV + @stExtFILEPDF
+	--END
 	 
 	IF (@stFILEOFFICE <>'')
 	BEGIN
@@ -227,14 +227,14 @@ BEGIN
 
 	IF (@dNGAYCV IS NULL)
 		SET @dNGAYCV = GETDATE()
-		
+			
 	INSERT INTO  dbo.tCongVan
 	(	
 		MSCV, SOCV, NOIDUNG, NOIDUNG_Unsign, NGAYCV, MSNV, MSLOAICV, MSCQ, MSGIAIDOAN, MSCVCHA, FILEPDF, FILEOFFICE, FILERAR
 	)
 	VALUES
 	( 
-		@stMSCV, @stSOCV, @stNOIDUNG, dbo.fConvertToUnsign(@stNOIDUNG), @dNGAYCV, @stMSNV, @iMSLOAICV, @iMSCQ, @iMSGIAIDOAN, @stMSCVCHA, @stFILEPDF, @stFILEOFFICE, @stFILERAR
+		@stMSCV, @stSOCV, @stNOIDUNG, dbo.fConvertToUnsign(@stNOIDUNG), @dNGAYCV, @stMSNV, @iMSLOAICV, @iMSCQ, @iMSGIAIDOAN, @stMSCVCHA, @stFILEPDF_ON_DATA , @stFILEOFFICE, @stFILERAR
 	)
 
 	SELECT @stMSCV
@@ -242,6 +242,7 @@ END
 GO
 
 CREATE PROC USP_ThemCongvanMSCV 
+--Dùng khi bổ sung công văn đã có file PDF trên Server
 	@stMSCV NVARCHAR(20),
 	@stFILEPDF NVARCHAR(MAX)	
 AS
@@ -517,7 +518,7 @@ AS SELECT	cv.*, lcv.LOAICV, cq.TENCQ, gd.GIAIDOAN
 GO
 
 --Tạo Functions
-CREATE FUNCTION dbo.fTaoMSCV(@stFirstMSCV NVARCHAR(1), @dNGAYCV DATE) RETURNS NVARCHAR(20) AS
+alter FUNCTION dbo.fTaoMSCV(@stFirstMSCV NVARCHAR(1), @dNGAYCV DATE) RETURNS NVARCHAR(20) AS
 -- Tạo MSCV với định dạng F.yyyymmdd.xxx hoặc T.yyyymmdd.xxx trong đó:
 -- stFirstMSCV (F: Công văn đến, T: Công văn đi); dNGAYCV (yyyymmdd)
 BEGIN
@@ -579,9 +580,8 @@ BEGIN
 		END 
 		
 		SET @COUNTER = @COUNTER +1 
-
 	END
-	--SET @strInput = replace(@strInput,' ','-')
+
 	RETURN @strInput
 END
 GO
