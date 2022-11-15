@@ -194,6 +194,34 @@ BEGIN
 END
 GO
 
+alter PROC USP_ExportData
+-- Xuất dữ liệu ra file
+-- Ví dụ: exec USP_ExportData 'select * from [qlhs_hp].dbo.tCongVan', 'd:\t1.xls', 'sa', 'nth12345'
+	@stQueryWithDatabaseName NVARCHAR(MAX), 
+	@stPathFileName NVARCHAR(MAX),
+	@stUserName NVARCHAR(MAX),
+	@stPassword NVARCHAR(MAX)
+AS
+BEGIN
+	-- show advanced options
+	EXEC master.dbo.sp_configure 'show advanced options', 1
+	RECONFIGURE WITH OVERRIDE
+	EXEC master.dbo.sp_configure 'xp_cmdshell', 1
+	RECONFIGURE WITH OVERRIDE
+
+	--Export Data
+	DECLARE @sql nvarchar(4000)	
+	SET @sql = 'bcp "' + @stQueryWithDatabaseName + '" queryout "' + @stPathFileName + '" -w -S "' + @@SERVERNAME + '" -U ' + @stUserName + ' -P ' + @stPassword
+	exec master..xp_cmdshell @sql
+
+	-- hide xp_cmdshell
+	EXEC master.dbo.sp_configure 'xp_cmdshell', 0
+	RECONFIGURE WITH OVERRIDE
+	EXEC master.dbo.sp_configure 'show advanced options', 0
+	RECONFIGURE WITH OVERRIDE
+END
+GO
+
 ALTER PROC USP_ThemCongvan 
 	@stFirstMSCV NVARCHAR(1) ='F',
 	@stSOCV NVARCHAR(50) = '',
