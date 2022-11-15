@@ -3,10 +3,13 @@
 -- (1) Đổi tên Database
 -- (2) Kiểm tra các dữ liệu đưa vào trước
 
-CREATE DATABASE QLHS_HP_BDH
+/* 
+CREATE DATABASE [ (1)... tên data]
 GO
-USE QLHS_HP_BDH
+USE [(1) ... tên data]
 GO
+*/
+
 -- Tạo Table
 CREATE TABLE dbo.tNhanVien
 (
@@ -18,6 +21,7 @@ CREATE TABLE dbo.tNhanVien
 	HIEULUC BIT DEFAULT 1
 )
 GO
+
 CREATE TABLE dbo.tLoaiCV
 (
 	MSLOAICV INT PRIMARY KEY IDENTITY(1,1),
@@ -25,6 +29,7 @@ CREATE TABLE dbo.tLoaiCV
 	MSLOAICVSAVE INT NULL
 )
 GO
+
 CREATE TABLE dbo.tGiaiDoan
 (
 	MSGIAIDOAN INT PRIMARY KEY IDENTITY(1,1),
@@ -32,6 +37,7 @@ CREATE TABLE dbo.tGiaiDoan
 	MSCVGOC NVARCHAR(20) NULL
 )
 GO
+
 CREATE TABLE dbo.tCoQuan
 (
 	MSCQ INT PRIMARY KEY IDENTITY(1,1),
@@ -39,12 +45,14 @@ CREATE TABLE dbo.tCoQuan
 	MSCQSAVE INT NULL
 )
 GO
+
 CREATE TABLE dbo.tDuoiCV
 (
 	MSDUOICV INT PRIMARY KEY IDENTITY(1,1),
 	DUOICV NVARCHAR(MAX) NOT NULL DEFAULT N'CV ĐI'
 )
 GO
+
 CREATE TABLE dbo.tCongVan
 (
 	MSCV NVARCHAR(20) PRIMARY KEY,
@@ -69,6 +77,7 @@ CREATE TABLE dbo.tCongVan
 GO
 CREATE INDEX indexNgayCV ON dbo.tCongVan(NGAYCV)
 GO
+
 CREATE TABLE dbo.tGiaoViec
 (
 	MSCVGIAOVIEC NVARCHAR(20),
@@ -81,6 +90,7 @@ CREATE TABLE dbo.tGiaoViec
 	FOREIGN KEY (MSCVGIAOVIEC) REFERENCES dbo.tCongVan(MSCV) ON DELETE CASCADE
 )
 GO
+
 CREATE TABLE dbo.tDangNhap
 (
 	MSNVLOGIN NVARCHAR(12),
@@ -88,6 +98,7 @@ CREATE TABLE dbo.tDangNhap
 	NGAYGIORA DATETIME NULL	
 )
 GO
+
 CREATE TABLE dbo.tThongSo
 (
 	MSTS NVARCHAR(12) PRIMARY KEY,
@@ -97,13 +108,15 @@ CREATE TABLE dbo.tThongSo
 	HIEULUC BIT DEFAULT 0
 )
 GO
+
 --Tạo Trigger
 CREATE TRIGGER dbo.trgNhanVienDelete ON dbo.tNhanVien FOR DELETE 
 AS
 BEGIN
 	DELETE FROM dbo.tGiaoViec WHERE MSNVGIAOVIEC IN (SELECT MSNV FROM Deleted)
 END
-go
+GO
+
 --Tạo Procudure
 CREATE PROC USP_Login @stMSNV NVARCHAR(12) = NULL, @stPassWord NVARCHAR(MAX) = NULL
 AS
@@ -112,6 +125,7 @@ BEGIN
 		SELECT MSNV FROM dbo.tNhanVien WHERE MSNV=@stMSNV AND PASSWORD=@stPassWord AND HIEULUC=1
 END
 GO
+
 CREATE PROC USP_CapnhatMatkhau @stMSNV NVARCHAR(12), @stPassWord NVARCHAR(MAX)
 AS
 BEGIN
@@ -249,7 +263,7 @@ AS
 BEGIN
 	IF ((LEFT(@stMSCV,2)='F.') OR (LEFT(@stMSCV,2)='T.'))
 	BEGIN
-		IF NOT EXISTS(SELECT MSCV FROM dbo.tCongVan WHERE trim(MSCV) = trim(@stMSCV))
+		IF NOT EXISTS(SELECT MSCV FROM dbo.tCongVan WHERE rtrim(MSCV) = rtrim(@stMSCV))
 		BEGIN
 			INSERT INTO  dbo.tCongVan
 			(	
@@ -313,6 +327,7 @@ BEGIN
 					  WHERE	MSCV = @stMSCV	
 END
 GO
+
 CREATE PROC USP_TimkiemCongvan --Tìm công văn và trả về MSCV, SOCV, NOIDUNG để đưa vào dtgvCongvan 	
 	@stNOIDUNG NVARCHAR(MAX) = NULL,
 	@iMSLOAICV INT = NULL, 
@@ -356,6 +371,7 @@ BEGIN
 							(PHEDUYET =1 OR MSCV LIKE 'F%')
 END
 GO
+
 CREATE PROC USP_CapnhatLoaiCV
 	@iID INT,
 	@stNOIDUNG NVARCHAR(50)
@@ -367,6 +383,7 @@ BEGIN
 		INSERT INTO dbo.tLoaiCV (LOAICV) VALUES (@stNOIDUNG)
 END
 GO
+
 CREATE PROC USP_CapnhatDuoiCV
 	@iID INT,
 	@stNOIDUNG NVARCHAR(50)
@@ -378,6 +395,7 @@ BEGIN
 		INSERT INTO dbo.tDuoiCV (DUOICV) VALUES (@stNOIDUNG)
 END
 GO
+
 CREATE PROC USP_CapnhatCoQuan
 	@iID INT,
 	@stNOIDUNG NVARCHAR(50)
@@ -431,6 +449,7 @@ BEGIN
 	END
 END
 GO
+
 CREATE PROC USP_ThemNhanVien
 	 @stMSNV NVARCHAR(12),
 	 @stHOTEN NVARCHAR(50)
@@ -440,6 +459,7 @@ BEGIN
 		INSERT INTO dbo.tNhanVien (MSNV, HOTEN, QUYENTRUYCAP, EMAIL, PASSWORD, HIEULUC) VALUES (@stMSNV, @stHOTEN, 'NV', '', '2003011414115776479911161271372042013444',1)
 END
 GO
+
 CREATE PROC USP_CapnhatThongSo
 @stMSTS NVARCHAR(12), 
 @stNOIDUNG NVARCHAR(MAX), 
@@ -585,6 +605,7 @@ BEGIN
 	RETURN @strInput
 END
 GO
+
 CREATE FUNCTION dbo.fGetExtFileName(@stFileName NVARCHAR(MAX)) RETURNS NVARCHAR(20) AS 
 BEGIN
 	SET @stFileName = REVERSE(@stFileName)
@@ -593,10 +614,12 @@ BEGIN
 	RETURN REVERSE(LEFT(@stFileName,@i))	  
 END
 GO
+
 -- Insert tNhanVien
 INSERT INTO dbo.tNhanVien (MSNV, HOTEN, QUYENTRUYCAP, EMAIL, PASSWORD, HIEULUC)
 VALUES (N'haint', N'Ngô Thanh Hải', N'AD', N'ngothanhhai1972@gmail.com', N'2003011414115776479911161271372042013444', 1)
 GO
+
 -- Insert tGiaiDoan
 INSERT INTO dbo.tGiaiDoan (GIAIDOAN) VALUES (N'Lập, thẩm định BCNCTKT, quyết định chủ trương đầu tư')
 INSERT INTO dbo.tGiaiDoan (GIAIDOAN) VALUES (N'Lập, thẩm định BCNCKT, phê duyệt dự án')
@@ -611,6 +634,7 @@ INSERT INTO dbo.tGiaiDoan (GIAIDOAN) VALUES (N'Xác nhận hoàn thành công tr
 INSERT INTO dbo.tGiaiDoan (GIAIDOAN) VALUES (N'Quản lý, vận hành, kinh doanh công trình (Thực hiện hợp đồng PPP)')
 INSERT INTO dbo.tGiaiDoan (GIAIDOAN) VALUES (N'Chuyển giao công trình, thanh lý hợp đồng (Thực hiện hợp đồng PPP)')
 GO
+
 --Insert tThongSo
 INSERT INTO dbo.tThongSo (MSTS, STR_DATA, STR_PATH, HIEULUC, NOIDUNG)
 VALUES (N'QLHS_HP', N'Data Source=192.168.1.222,1433;Initial Catalog=QLHS_HP;Persist Security Info=True;User ID=BOT.HP;Password=hp12345', N'\\192.168.1.222\QLHS\PDF FILE\BOT.HP', 1, N'Dự án PPP ven biển Hải Phòng - Thời gian từ 2018-2022')
@@ -628,73 +652,14 @@ GO
 --Insert tCoQuan
 INSERT INTO dbo.tCoQuan (TENCQ) VALUES (N'_CHƯA XÁC ĐỊNH') -- TENCQ - nvarchar(50)
 GO
+
 --Insert tDuoiCV
 INSERT INTO dbo.tDuoiCV (DUOICV) VALUES (N'_CV ĐẾN') -- DUOICV - nvarchar(max)
 GO
+
 INSERT INTO dbo.tDuoiCV (DUOICV) VALUES (N'_CHƯA XÁC ĐỊNH') -- DUOICV - nvarchar(max)
 GO
+
 --Insert tLoaiCV
 INSERT INTO dbo.tLoaiCV (LOAICV) VALUES (N'_CHƯA XÁC ĐỊNH') -- LOAICV - nvarchar(50)
 GO
-
---DATE: 07/10/2021
-
---IF @iMSLOAICV IS NULL
-	--	SET @iMSLOAICV = 0	
-
-	--IF @iMSCQ IS NULL
-	--	SET @iMSCQ = 0
-	
-	--IF @iMSGIAIDOAN IS NULL
-	--	SET @iMSGIAIDOAN = 0
-
---CREATE PROC USP_XoaCongvan 
---	@stMSCV NVARCHAR(20) =''
---AS
---BEGIN
---	IF ((SELECT MSCVGIAOVIEC FROM dbo.tGiaoViec WHERE MSCVGIAOVIEC = @stMSCV)>0)
---		DELETE FROM dbo.tGiaoViec WHERE MSCVGIAOVIEC = @stMSCV
---	DELETE FROM dbo.tCongVan WHERE MSCV = @stMSCV
---END
---GO
-
---alter PROC USP_TaotSoCVDen --tSoCV phải có dữ liệu mới nhất
---AS
---BEGIN
---	IF (EXISTS(select * from INFORMATION_SCHEMA.TABLES where table_name='tSoCVDen'))
---		DROP TABLE tSoCVDen
---	SELECT * INTO tSoCVDen FROM UVW_SoCVDen
---END
---go
-
---alter PROC USP_TaotSoCVDi --tSoCV phải có dữ liệu mới nhất
---AS
---BEGIN
---	IF (EXISTS(select * from INFORMATION_SCHEMA.TABLES where table_name='tSoCVDi'))
---		DROP TABLE tSoCVDi
---	SELECT * INTO tSoCVDi FROM UVW_SoCVDi
---END
---GO
-
---alter PROC USP_TaotSoCV -- Input: UVW_SoCV; Output: tSoCVDi và tSoCVDen
---AS
---BEGIN
---	IF (EXISTS(select * from INFORMATION_SCHEMA.TABLES where table_name='tSoCV'))
---		DROP TABLE tSoCV
---	SELECT * INTO tSoCV FROM dbo.tSoCVDen 
---	INSERT INTO tSoCV SELECT * FROM dbo.tSoCVDi
---END
---GO
-
----- Tạo View
---CREATE VIEW UVW_SoCV
---AS SELECT *, MSCV AS [COL0], SOCV AS [COL1], dbo.fConvertToUnsign(NOIDUNG) AS [COL2] FROM tCongVan WHERE PHEDUYET =1 OR LEFT(MSCV,1)='F'
---GO
---CREATE VIEW UVW_SoCVDen
---AS SELECT *, MSCV AS [COL0], SOCV AS [COL1], dbo.fConvertToUnsign(NOIDUNG) AS [COL2] FROM tCongVan WHERE LEFT(MSCV,1)='F'
---GO
---CREATE VIEW UVW_SoCVDi
---AS SELECT *, MSCV AS [COL0], SOCV AS [COL1], dbo.fConvertToUnsign(NOIDUNG) AS [COL2] FROM tCongVan WHERE PHEDUYET =1 AND LEFT(MSCV,1)='T'
---GO
-
--- Tạo Function
