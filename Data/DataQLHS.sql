@@ -5,7 +5,6 @@
 -- (2) Kiểm tra các dữ liệu đưa vào trước
 ----------------------------------------------*/
 
--- Tạo Database
 CREATE DATABASE [QLHS_HP]
 GO
 USE [QLHS_HP]
@@ -57,7 +56,7 @@ CREATE TABLE dbo.tCongVan
 (
 	MSCV			BIGINT PRIMARY KEY IDENTITY(1,1),
 	SOCV			NVARCHAR(MAX) NOT NULL,
-	bCVDEN			BIT NOT NULL DEFAULT 0,
+	CVDEN			BIT NOT NULL DEFAULT 0,
 	NGAYCV			DATE NOT NULL DEFAULT GETDATE(),
 	NOIDUNG			NVARCHAR(MAX) NULL,
 	NOIDUNG_Unsign	NVARCHAR(MAX) NULL,
