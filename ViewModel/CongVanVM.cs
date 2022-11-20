@@ -15,12 +15,12 @@ namespace ViewModel
         }
 
         #region Method
-        public CongVan GetCongVanByMSCV(string stMSCV)
+        public CongVan GetCongVanByMSCV(long lMSCV)
         {
             CongVan cv = null;
-            if (!string.IsNullOrEmpty(stMSCV))
+            if (lMSCV ==0)
             {
-                string stQuery = string.Format("SELECT * FROM tCONGVAN WHERE MSCV = N'{0}'", stMSCV);
+                string stQuery = string.Format("SELECT * FROM tCONGVAN WHERE MSCV = ", lMSCV);
                 DataTable data = DataProvider.Instance.ExecuteQuery(stQuery);
                 if(data.Rows.Count>0) cv = new CongVan(data.Rows[0]);
             }
@@ -66,12 +66,12 @@ namespace ViewModel
             }
         }
 
-        public string ThemCongvan(CongVan cv) //Thêm công văn đầy đủ
+        public long ThemCongvan(CongVan cv) //Thêm công văn đầy đủ
         {
             string stDestPath = Utilities.Instance.GetPathFile();
             string stQuery = "exec USP_ThemCongvan @stFirstMSCV , @stSOCV , @stNOIDUNG , @dNGAYCV , @stMSNV , @iMSLOAICV , @iMSCQ , @iMSGIAIDOAN , @stMSCVCHA , @stPATHSERVER , @stFILEPDF , @stFILEOFFICE , @stFILERAR ";
             var result = DataProvider.Instance.ExecuteScalar(stQuery, new object[] { cv.MSCV, cv.SOCV, cv.NOIDUNG, cv.NGAYCV, cv.MSNV, cv.MSLOAICV, cv.MSCQ, cv.MSGIAIDOAN, cv.MSCVCHA, stDestPath, cv.FILEPDF, cv.FILEOFFICE, cv.FILERAR });
-            return result.ToString();
+            return Convert.ToInt64(result);
         }
 
         public string ThemCongvan(string stMSCV, string stFilePDF) //Thêm công văn chỉ MSCV và file PDF - Dùng khi cập nhật công văn đã có file PDF trên Server
@@ -88,9 +88,9 @@ namespace ViewModel
             return result > 0;
         }
 
-        public bool XoaCongvan(string stMSCV)
+        public bool XoaCongvan(long lMSCV)
         {
-            string stQuery = $"DELETE FROM tCongVan WHERE MSCV ='{stMSCV}'";
+            string stQuery = $"DELETE FROM tCongVan WHERE MSCV ={lMSCV}";
             int result = DataProvider.Instance.ExecuteNonQuery(stQuery);
             return result > 0;
         }

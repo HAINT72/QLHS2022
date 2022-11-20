@@ -134,16 +134,16 @@ namespace UserControls
             SetBlankAllControl();
         }
 
-        public void MoveCongVan(string stMSCV)
+        public void MoveCongVan(long lMSCV)
         {
             int iIndex = 0;
             if (bindCV.Current.GetType() == typeof(CongVan))
             {
                 List<CongVan> lst = bindCV.DataSource as List<CongVan>;
-                iIndex = lst.FindIndex((cv) => { return cv.MSCV == stMSCV; }); //Tìm kiếm dạng List
+                iIndex = lst.FindIndex((cv) => { return cv.MSCV == lMSCV; }); //Tìm kiếm dạng List
             }
             else
-                iIndex = bindCV.Find("MSCV", stMSCV); //Tìm kiếm dạng DataTable
+                iIndex = bindCV.Find("MSCV", lMSCV); //Tìm kiếm dạng DataTable
             bindCV.Position = iIndex;
         }
         #endregion

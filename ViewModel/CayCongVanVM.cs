@@ -35,8 +35,8 @@ namespace ViewModel
             {
                 if(node.Checked)
                 {
-                    string stMSCV = node.Name.ToString();
-                    AddCVToListBox(stMSCV, lst);
+                    long lMSCV = long.Parse(node.Name.ToString());
+                    AddCVToListBox(lMSCV, lst);
                 }
                 foreach (TreeNode n in node.Nodes)
                 {
@@ -53,11 +53,11 @@ namespace ViewModel
             }
         }
 
-        public void AddCVToListBox(string stMSCV, ListBox lst)
+        public void AddCVToListBox(long lMSCV, ListBox lst)
         {
-            if (string.IsNullOrEmpty(stMSCV)) return;
-            CongVan cv = CongVanVM.Instance.GetCongVanByMSCV(stMSCV);
-            if (lst.FindString(stMSCV) < 0) //Chưa có trong ListBox thì đưa vào
+            if (lMSCV == 0) return;
+            CongVan cv = CongVanVM.Instance.GetCongVanByMSCV(lMSCV);
+            if (lst.FindString(lMSCV.ToString()) < 0) //Chưa có trong ListBox thì đưa vào
             {
                 lst.Items.Add(cv.MSCV + "; " + cv.SOCV + ", " + cv.NGAYCV.ToShortDateString());
             }
@@ -72,8 +72,8 @@ namespace ViewModel
             //Copy vào thư mục
             foreach (var item in lst.Items)
             {
-                string stMSCV = item.ToString().Split(';')[0];
-                CongVan cv = CongVanVM.Instance.GetCongVanByMSCV(stMSCV);
+                long lMSCV = long.Parse(item.ToString().Split(';')[0]);
+                CongVan cv = CongVanVM.Instance.GetCongVanByMSCV(lMSCV);
                 bKetqua = Utilities.Instance.CopyFileFromServer(cv.FILEPDF, stFolder);
             }
             //Tạo file Excel checklist
@@ -114,8 +114,8 @@ namespace ViewModel
             foreach (CongVan cv in lstCVRoot)
             {
                 string stRootLabel = GiaiDoanVM.Instance.GetTenGiaiDoanByMSGD(cv.MSGIAIDOAN);
-                TreeNode node = tvw.Nodes.Add(cv.MSCV, $"[{stRootLabel}]: ({cv.MSCV} - {cv.SOCV}, {cv.NGAYCV})");
-                LoadNodeCV(node, cv.MSCV);
+                TreeNode node = tvw.Nodes.Add(cv.MSCV.ToString(), $"[{stRootLabel}]: ({cv.MSCV} - {cv.SOCV}, {cv.NGAYCV})");
+                LoadNodeCV(node, cv.MSCV.ToString());
             }
         }
 
@@ -162,28 +162,28 @@ namespace ViewModel
 
         public void GiamNhanhCayCV(TreeView tv, TreeNode nodeSource)
         {
-            string stMSCV = nodeSource.Name.ToString();
-            CongVan cv = CongVanVM.Instance.GetCongVanByMSCV(stMSCV);
-            if (string.IsNullOrEmpty(cv.MSCVCHA))
+            long lMSCV = long.Parse(nodeSource.Name.ToString());
+            CongVan cv = CongVanVM.Instance.GetCongVanByMSCV(lMSCV);
+            if (cv.MSCVCHA ==0)
             {
                 Functions.MsgBox("Không thể giảm nhánh do công văn đã nằm vị trí gốc", MessageType.Information);
                 return;
             }
             cv= CongVanVM.Instance.GetCongVanByMSCV(cv.MSCVCHA);
-            string stMSCVCha = cv.MSCVCHA;
+            long lMSCVCha = cv.MSCVCHA;
             //Xử lý trên UI
             tv.Nodes.Remove(nodeSource);            
-            if (string.IsNullOrEmpty(stMSCVCha)) 
+            if (lMSCVCha ==0) 
             {
                 tv.Nodes.Add(nodeSource); //Vị trí Gốc
             }
             else
             {
-                TreeNode nodeTarget = tv.Nodes.Find(stMSCVCha, true)[0];
+                TreeNode nodeTarget = tv.Nodes.Find(lMSCVCha.ToString(), true)[0];
                 nodeTarget.Nodes.Add(nodeSource); ////Vị trí Nhánh
             }
             //Xử lý tại Database SQL
-            string stQuery = $"UPDATE tCongVan SET MSCVCHA = '{stMSCVCha}' WHERE MSCV ='{stMSCV}'";
+            string stQuery = $"UPDATE tCongVan SET MSCVCHA = {lMSCVCha} WHERE MSCV ={lMSCV}";
             DataProvider.Instance.ExecuteNonQuery(stQuery);
         }
     }

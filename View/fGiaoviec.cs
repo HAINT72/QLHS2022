@@ -32,10 +32,10 @@ namespace View
 
         private void btnCV_Click(object sender, EventArgs e)
         {
-            string stMSCV = dtgvCV.GetID();
+            long lMSCV = dtgvCV.GetID();
             dtgvCV.bindDtgv.RemoveCurrent();
             List<GiaoViec> lst = dtgvGV.bindDtgv.DataSource as List<GiaoViec>;
-            if (lst.Exists((gv) => { return gv.MSCVGIAOVIEC == stMSCV; }))
+            if (lst.Exists((gv) => { return gv.MSCVGIAOVIEC == lMSCV; }))
             {
                 Functions.MsgBox("Công văn đã được chỉ đạo", MessageType.Information);
                 return;

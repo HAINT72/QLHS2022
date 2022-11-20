@@ -56,7 +56,7 @@ namespace ViewModel
         public bool CapnhatNhanVien(NhanVien nv)
         {
             string stQuery = "exec USP_CapnhatNhanVien @stMSNV , @stHOTEN , @stQUYENTRUYCAP , @stEmail , @bHIEULUC";
-            int result = DataProvider.Instance.ExecuteNonQuery(stQuery, new object[] {nv.MSNV, nv.HOTEN, nv.QUYENTRUYCAP, nv.EMAIL, nv.HIEULUC});            
+            int result = DataProvider.Instance.ExecuteNonQuery(stQuery, new object[] {nv.MSNV, nv.HOTEN, nv.QUYENTC, nv.EMAIL, nv.HIEULUC});            
             return result > 0;
         }
         #endregion

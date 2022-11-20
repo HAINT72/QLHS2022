@@ -18,7 +18,7 @@ namespace View
             this.dtgvNhanvien.SetDataSource("SELECT * FROM tNhanvien ORDER BY MSNV");
             this.dtgvNhanvien.SetHeaderText(new string[] { "Username", "Họ và tên", "Quyền", "Email", null, "*" });
             this.dtgvNhanvien.AutoSizeDtgvCellsOn();
-            this.radioBtnAD.Enabled = (ShareVar.Instance.NV.QUYENTRUYCAP == "AD");
+            this.radioBtnAD.Enabled = (ShareVar.Instance.NV.QUYENTC == "AD");
             SetBinding();
         }
         private void SetBinding()

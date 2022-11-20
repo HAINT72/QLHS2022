@@ -14,16 +14,16 @@ namespace UserControls
             InitializeComponent();
         }
 
-        public void MoveCongVan(string stMSCV)
+        public void MoveCongVan(long lMSCV)
         {
             int iIndex = 0;
             if (bindDtgv.Current.GetType() == typeof(CongVan))
             {
                 List<CongVan> lst = bindDtgv.DataSource as List<CongVan>;
-                iIndex = lst.FindIndex((cv) => { return cv.MSCV == stMSCV; }); //Tìm kiếm dạng List
+                iIndex = lst.FindIndex((cv) => { return cv.MSCV == lMSCV; }); //Tìm kiếm dạng List
             }
             else
-                iIndex = bindDtgv.Find("MSCV", stMSCV); //Tìm kiếm dạng DataTable
+                iIndex = bindDtgv.Find("MSCV", lMSCV); //Tìm kiếm dạng DataTable
             bindDtgv.Position = iIndex;
         }
 
@@ -48,7 +48,7 @@ namespace UserControls
 
         private void dtgv_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
-            if (string.IsNullOrEmpty(stId) || bindDtgv.Count ==0)
+            if (string.IsNullOrEmpty(lgId) || bindDtgv.Count ==0)
             {
                 cms.Items[0].Enabled = false;
                 cms.Items[1].Enabled = false;
@@ -56,7 +56,7 @@ namespace UserControls
             }
             else
             {
-                CongVan cv = CongVanVM.Instance.GetCongVanByMSCV(stId);
+                CongVan cv = CongVanVM.Instance.GetCongVanByMSCV(lgId);
                 cms.Items[0].Enabled = !string.IsNullOrEmpty(cv.FILEPDF);
                 cms.Items[1].Enabled = !string.IsNullOrEmpty(cv.FILEOFFICE);
                 cms.Items[2].Enabled = !string.IsNullOrEmpty(cv.FILERAR);
@@ -65,17 +65,17 @@ namespace UserControls
 
         private void cmsOpenFilePDFAtch_Click(object sender, EventArgs e)
         {
-            CongVanVM.Instance.OpenFileAtch(stId, "PDF");
+            CongVanVM.Instance.OpenFileAtch(lgId, "PDF");
         }
 
         private void cmsOpenFileOfficeAtch_Click(object sender, EventArgs e)
         {
-            CongVanVM.Instance.OpenFileAtch(stId, "OFFICE");
+            CongVanVM.Instance.OpenFileAtch(lgId, "OFFICE");
         }
 
         private void cmsOpenFileRARAtch_Click(object sender, EventArgs e)
         {
-            CongVanVM.Instance.OpenFileAtch(stId, "RAR");
+            CongVanVM.Instance.OpenFileAtch(lgId, "RAR");
         }
     }
 }

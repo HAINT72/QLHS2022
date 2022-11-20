@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Model;
 using System.Collections.Generic;
+using System;
 
 namespace UserControls
 {
@@ -32,7 +33,7 @@ namespace UserControls
         private ToolStripButton tsbtnAutosizeDtgvCells = new ToolStripButton();
         public ToolTip tltip = new ToolTip();
 
-        protected string stId = string.Empty;
+        protected long lgId = 0;
         private string stQuerySave = string.Empty;
 
         public dtgvBaseUC()
@@ -162,8 +163,8 @@ namespace UserControls
 
         private void dtgv_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
-            stId = dtgv.Rows[e.RowIndex].Cells[0].Value.ToString();
-            ShareVar.Instance.ID = stId;
+            lgId = Convert.ToInt64(dtgv.Rows[e.RowIndex].Cells[0].Value);
+            ShareVar.Instance.ID = lgId;
             tsbtnAutosizeDtgvCells.Enabled = (bindDtgv.Count < 100);
 
         }
@@ -197,9 +198,9 @@ namespace UserControls
             }
         }
 
-        public string GetID()
+        public long GetID()
         {
-            return stId;
+            return lgId;
         }
     }
 }

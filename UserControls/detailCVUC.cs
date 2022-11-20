@@ -269,8 +269,8 @@ namespace UserControls
             if (iMSGIAIDOAN > 0)
             {
                 GiaiDoan gd = GiaiDoanVM.Instance.GetGiaiDoanByMSGD(iMSGIAIDOAN);
-                string stMSCV = gd.MSCVGOC;
-                MovecbMSCVCHA(stMSCV);
+                long lMSCV = gd.MSCVGOC;
+                MovecbMSCVCHA(lMSCV);
             }
         }
 
@@ -333,21 +333,20 @@ namespace UserControls
         protected CongVan GetCongVan()
         {
             string stMSDUOICV = cbMSDUOICV.SelectedValue?.ToString();
-            string stMSCV = txbMSCV.Text;
-            if (string.IsNullOrEmpty(stMSCV))
-                stMSCV = (stMSDUOICV == "_CV ĐẾN") ? "F" : "T"; //Ký tự đầu MSCV (F: CV đến; T: CV đi)
+            long lMSCV = Convert.ToInt64(txbMSCV.Text);
+            // bổ sung chọn CVDEN (true/false)
             string stSOCV = txbSoCV.Text.ToUpper();
             string stNOIDUNG = txbNoidung.Text;
             DateTime dNGAYCV = Convert.ToDateTime(dtpkNgayCV.Value);
             int iMSLOAICV = Convert.ToInt32(cbMSLoaiCV.SelectedValue);
             int iMSCQ = Convert.ToInt32(cbMSCQ.SelectedValue);
             int iMSGIAIDOAN = Convert.ToInt32(cbMSGiaidoan.SelectedValue);
-            string stMSCVCHA = (cbMSCVCHA.SelectedValue != null) ? cbMSCVCHA.SelectedValue?.ToString() : "";
+            long lMSCVCHA = Convert.ToInt64(cbMSCVCHA.SelectedValue);
             string stFILEPDF = txbFilePDF.Text;
             string stFILEOFFICE = txbFileOffice.Text;
             string stFILERAR = txbFileRAR.Text;
-            string stMSNV = nv.MSNV;
-            CongVan cv = new CongVan(stMSCV, stSOCV, dNGAYCV, stNOIDUNG, stMSNV, iMSLOAICV, iMSCQ, iMSGIAIDOAN, stMSCVCHA, stFILEPDF, stFILEOFFICE, stFILERAR);
+            int iMSNV = Convert.ToInt32(nv.MSNV);
+            CongVan cv = new CongVan(lMSCV, stSOCV, false, dNGAYCV, stNOIDUNG, iMSNV, iMSLOAICV, iMSCQ, iMSGIAIDOAN, lMSCVCHA, stFILEPDF, stFILEOFFICE, stFILERAR);
             return cv;
         }
 
@@ -453,18 +452,18 @@ namespace UserControls
             }
         }
 
-        public void MovecbMSCVCHA(string stMSCV)
+        public void MovecbMSCVCHA(long lMSCV)
         {
-            if (string.IsNullOrEmpty(stMSCV)) return;
-            int iIndex = Utilities.Instance.GetIndexCombobox(cbMSCVCHA, stMSCV);
+            if (lMSCV == 0) return;
+            int iIndex = Utilities.Instance.GetIndexCombobox(cbMSCVCHA, lMSCV);
             cbMSCVCHA.SelectedIndex = iIndex;
         }
 
-        private bool UserLoginCanDeleteEdit(string stMSCV)
+        private bool UserLoginCanDeleteEdit(long lMSCV)
         {
-            if (string.IsNullOrEmpty(stMSCV)) return false;
-            CongVan cv = CongVanVM.Instance.GetCongVanByMSCV(stMSCV);
-            if (nv.QUYENTRUYCAP == "VT" || (cv.MSNV == nv.MSNV && cv.PHEDUYET == false))
+            if (lMSCV == 0) return false;
+            CongVan cv = CongVanVM.Instance.GetCongVanByMSCV(lMSCV);
+            if (nv.QUYENTC == "VT" || (cv.MSNV == nv.MSNV && cv.PHEDUYET == false))
                 return true;
             else
                 return false;

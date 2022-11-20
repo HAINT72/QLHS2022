@@ -22,9 +22,9 @@ namespace ViewModel
             return DataProvider.Instance.DataTableToList<GiaoViec>(data);
         }
 
-        private string GetEmailByMSNV(string stMSNV)
+        private string GetEmailByMSNV(int iMSNV)
         {
-            string stQuery = $"SELECT EMAIL FROM tNhanVien WHERE MSNV ='{stMSNV}'";
+            string stQuery = $"SELECT EMAIL FROM tNhanVien WHERE MSNV ={iMSNV}";
             object data = DataProvider.Instance.ExecuteScalar(stQuery);
             return data.ToString();
         }
@@ -43,10 +43,10 @@ namespace ViewModel
             Functions.MsgBox("Đã gửi mail thành công", MessageType.Success);
         }
 
-        public bool CapnhatGiaoViec(string stMSCV, string stMSNV, string stCHIDAO, bool bThongBao)
+        public bool CapnhatGiaoViec(long lMSCV, int stMSNV, string stCHIDAO, bool bThongBao)
         {
             string stQuery = "exec USP_CapnhatGiaoViec @stMSCV , @stMSNV , @stCHIDAO , @bTHONGBAO ";
-            return (DataProvider.Instance.ExecuteNonQuery(stQuery, new object[] { stMSCV, stMSNV, stCHIDAO, bThongBao })) > 0;
+            return (DataProvider.Instance.ExecuteNonQuery(stQuery, new object[] { lMSCV, iMSNV, stCHIDAO, bThongBao })) > 0;
         }
 
         public bool XoaGiaoViec(GiaoViec gv)

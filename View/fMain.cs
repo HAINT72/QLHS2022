@@ -24,8 +24,8 @@ namespace View
         }
         private void fMain_Activated(object sender, EventArgs e)
         {
-            string stMSNV = ShareVar.Instance.NV.MSNV;
-            string stQuyenTC = ShareVar.Instance.NV.QUYENTRUYCAP;
+            int stMSNV = ShareVar.Instance.NV.MSNV;
+            string stQuyenTC = ShareVar.Instance.NV.QUYENTC;
             string stDatabaseName = DataProvider.Instance.stMSTS;
             txbtoolStripUsername.Text = $"Người đăng nhập: {stMSNV} ({stQuyenTC})";
             txbtoolStripDatabaseName.Text = $"Dữ liệu sử dụng: [{stDatabaseName}]";

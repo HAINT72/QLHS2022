@@ -36,7 +36,7 @@ namespace View
         {
             string userName = txbUserName.Text;
             string passWord = txbPassWord.Text;
-            if (NhanVienVM.Instance.Login(userName, passWord) && (ShareVar.Instance.NV.QUYENTRUYCAP =="AD"))
+            if (NhanVienVM.Instance.Login(userName, passWord) && (ShareVar.Instance.NV.QUYENTC =="AD"))
             {
                 fThongsoCaidat f = new fThongsoCaidat();
                 f.ShowDialog();

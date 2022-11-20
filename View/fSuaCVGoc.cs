@@ -70,17 +70,17 @@ namespace View
             //Cập nhật tGiaiDoan
             int iMSGD = Convert.ToInt32(txbMSGD.Text);
             GiaiDoan gd = GiaiDoanVM.Instance.GetGiaiDoanByMSGD(iMSGD);
-            string stMSCVSource = gd.MSCVGOC;
+            long lMSCVSource = gd.MSCVGOC;
             string stGiaiDoan = txbGiaiDoan.Text;
-            string stMSCVGoc = txbMSCV.Text;
-            bool bKetQua = GiaiDoanVM.Instance.CapNhatGiaiDoan(iMSGD, stGiaiDoan, stMSCVGoc);
+            long lMSCVGoc = Convert.ToInt64(txbMSCV.Text);
+            bool bKetQua = GiaiDoanVM.Instance.CapNhatGiaiDoan(iMSGD, stGiaiDoan, lMSCVGoc);
             if (bKetQua)
                 Functions.MsgBox("Cập nhật dữ liệu Bảng 'Giai đoạn' thành công.");
             else
                 Functions.MsgBox("Cập nhật dữ liệu Bảng 'Giai đoạn' thất bại.");
 
             //Cập nhật Cây Công văn
-            bKetQua = GiaiDoanVM.Instance.CapNhatCayCV(stMSCVSource, stMSCVGoc);
+            bKetQua = GiaiDoanVM.Instance.CapNhatCayCV(lMSCVSource, lMSCVGoc);
             if (bKetQua)
                 Functions.MsgBox("Cập nhật cây công văn thành công.");
             else

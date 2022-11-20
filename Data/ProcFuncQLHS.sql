@@ -91,7 +91,7 @@ BEGIN
 		UPDATE tCongVan SET FILEPDF = @stMSCV + dbo.fGetExtFileName(@stFILERAR) WHERE MSCV = @iMSCV
 	END
 	
-	SELECT @stMSCV 
+	SELECT @iMSCV 
 END
 GO
 
@@ -118,7 +118,7 @@ END
 GO
 
 CREATE PROC USP_SuaCongvan 
-	@iMSCV			INT,
+	@iMSCV			BIGINT,
 	@stSOCV			NVARCHAR(MAX) = '',
 	@bCVDEN			BIT =1 ,
 	@stNOIDUNG		NVARCHAR(MAX) = '',
@@ -165,7 +165,7 @@ BEGIN
 		UPDATE tCongVan SET FILEPDF = @stMSCV + dbo.fGetExtFileName(@stFILERAR) WHERE MSCV = @iMSCV
 	END
 	
-	SELECT @stMSCV 
+	SELECT @iMSCV 
 
 END
 GO

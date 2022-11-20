@@ -39,7 +39,7 @@ namespace View
 
         private void fDoiMatkhau_Load(object sender, EventArgs e)
         {
-            txbUsername.Text = ShareVar.Instance.NV.MSNV;
+            txbUsername.Text = ShareVar.Instance.NV.USERNAME;
         }
 
         private void btnHuy_Click(object sender, EventArgs e)

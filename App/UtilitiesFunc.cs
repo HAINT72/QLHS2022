@@ -32,8 +32,8 @@ namespace App
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private string _ID = string.Empty;
-        public string ID
+        private long _ID = 0;
+        public long ID
         {
             get { return _ID; }
             set { _ID = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ID")); }
@@ -343,10 +343,10 @@ namespace App
             var fileInfo = new FileInfo(stFilePath);
             using (ExcelPackage pck = new ExcelPackage(fileInfo))
             {
-                string stMSNV = ShareVar.Instance.NV.MSNV;
-                pck.Workbook.Properties.Author = stMSNV;
+                string stUSERNAME = ShareVar.Instance.NV.USERNAME;
+                pck.Workbook.Properties.Author = stUSERNAME;
                 pck.Workbook.Properties.Company = "HPRC";
-                pck.Workbook.Properties.Title = $"Exported by '{stMSNV}'";
+                pck.Workbook.Properties.Title = $"Exported by '{stUSERNAME}'";
                 ExcelWorksheet ws = pck.Workbook.Worksheets.Add(stSheetName);
                 ws.Cells["A1"].LoadFromDataTable(table, true);
                 pck.Save();

@@ -80,10 +80,10 @@ namespace ViewModel
             return bKetqua;
         }
 
-        public bool ThemNhanVien(string stMSNV, string stHOTEN = "New user")
+        public bool ThemNhanVien(int iMSNV, string stHOTEN = "New user")
         {
-            string stQuery = "exec USP_ThemNhanVien @stMSNV , @stHOTEN";
-            return (DataProvider.Instance.ExecuteNonQuery(stQuery, new object[] { stMSNV , stHOTEN } )) > 0;
+            string stQuery = "exec USP_ThemNhanVien @iMSNV , @stHOTEN";
+            return (DataProvider.Instance.ExecuteNonQuery(stQuery, new object[] { iMSNV , stHOTEN } )) > 0;
         }
     }
 }

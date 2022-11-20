@@ -40,10 +40,10 @@ namespace ViewModel
             return gd.GIAIDOAN;
         }
 
-        public bool CapNhatGiaiDoan(int iMSGIAIDOAN, string stGiaiDoan, string stMSCVGoc)
+        public bool CapNhatGiaiDoan(int iMSGIAIDOAN, string stGiaiDoan, long lMSCVGoc)
         {
             string stQuery = "exec USP_CapnhatGiaidoan @iID , @stNOIDUNG , @stMSCVGOC";
-            return (DataProvider.Instance.ExecuteNonQuery(stQuery, new object[] { iMSGIAIDOAN , stGiaiDoan, stMSCVGoc })) > 0;
+            return (DataProvider.Instance.ExecuteNonQuery(stQuery, new object[] { iMSGIAIDOAN , stGiaiDoan, lMSCVGoc })) > 0;
         }
 
         public bool XoaGiaiDoan(int iMSGIAIDOAN)
@@ -55,14 +55,14 @@ namespace ViewModel
             return bKetqua;
         }
 
-        public bool CapNhatCayCV(string stMSCV_Source, string stMSCV_Dest)
+        public bool CapNhatCayCV(long lMSCV_Source, long lMSCV_Dest)
         {
             bool bKetQua = false;
-            if (!string.IsNullOrEmpty(stMSCV_Source) && !string.IsNullOrEmpty(stMSCV_Dest))
+            if (lMSCV_Source!=0 && lMSCV_Dest !=0)
             {
-                string stMsg = $"Bạn có chắc chắn muốn điều chỉnh MSCV gốc từ '{stMSCV_Source}' thành '{stMSCV_Dest}'?";
+                string stMsg = $"Bạn có chắc chắn muốn điều chỉnh MSCV gốc từ '{lMSCV_Source}' thành '{lMSCV_Dest}'?";
                 string stQuery = "exec USP_CapnhatCayCV @stMSCV_SOURCE , @stMSCV_DEST";
-                Functions.MsgBox(stMsg, MessageType.Confirmation, () => { bKetQua = (DataProvider.Instance.ExecuteNonQuery(stQuery, new object[] { stMSCV_Source, stMSCV_Dest }) > 0); });
+                Functions.MsgBox(stMsg, MessageType.Confirmation, () => { bKetQua = (DataProvider.Instance.ExecuteNonQuery(stQuery, new object[] { lMSCV_Source, lMSCV_Dest }) > 0); });
             }
             return bKetQua;
         }
