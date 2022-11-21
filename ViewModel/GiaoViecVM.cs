@@ -43,7 +43,7 @@ namespace ViewModel
             Functions.MsgBox("Đã gửi mail thành công", MessageType.Success);
         }
 
-        public bool CapnhatGiaoViec(long lMSCV, int stMSNV, string stCHIDAO, bool bThongBao)
+        public bool CapnhatGiaoViec(long lMSCV, int iMSNV, string stCHIDAO, bool bThongBao)
         {
             string stQuery = "exec USP_CapnhatGiaoViec @stMSCV , @stMSNV , @stCHIDAO , @bTHONGBAO ";
             return (DataProvider.Instance.ExecuteNonQuery(stQuery, new object[] { lMSCV, iMSNV, stCHIDAO, bThongBao })) > 0;

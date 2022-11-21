@@ -1,10 +1,11 @@
-﻿﻿/*--------------------------------------------------------------
+﻿﻿/* -------------------------------------------------------------
 Tạo PROC, FUNC cho Data:
 -- Trước khi chạy script này, phải thực hiện:
 -- (1) Tạo Data, Table (File Data.sql)
 -- (2) Chạy các PROC, FUNC trong Utilities.sql (Thư mục SHARE)
----------------------------------------------------------------*/
+--------------------------------------------------------------- */
 
+-- Sử dụng Data
 USE QLHS_HP
 GO
 
@@ -13,7 +14,7 @@ CREATE PROC USP_Login @iMSNV INT, @stPassWord NVARCHAR(MAX)
 AS
 BEGIN
 	IF ((@iMSNV IS NOT NULL) AND  (@stPassWord IS NOT NULL))
-		SELECT MSNV FROM dbo.tNhanVien WHERE MSNV=@iMSNV AND MATKHAU=@stPassWord AND HIEULUC=1
+		SELECT MSNV FROM dbo.tNhanVien WHERE MSNV = @iMSNV AND MATKHAU=@stPassWord AND HIEULUC=1
 END
 GO
 

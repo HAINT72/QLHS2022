@@ -39,10 +39,10 @@ namespace ViewModel
             return cvv;
         }
 
-        public void OpenFileAtch(string stMSCV, string stFileType = "PDF")
+        public void OpenFileAtch(long lMSCV, string stFileType = "PDF")
         {
-            if (string.IsNullOrEmpty(stMSCV)) return;
-            CongVan cv = GetCongVanByMSCV(stMSCV);
+            if (lMSCV ==0) return;
+            CongVan cv = GetCongVanByMSCV(lMSCV);
             if (cv != null)
             {
                 switch (stFileType.ToUpper())
